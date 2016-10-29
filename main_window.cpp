@@ -17,7 +17,7 @@ main_window_t::impl_t::impl_t(std::string title, int width, int height) :impl_t(
 main_window_t::impl_t::impl_t(std::string title, int x, int y, int width, int height) : title(title), width(width), height(height) {
 	std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>, wchar_t> converter;
 
-	hWnd = CreateWindowExW(0, reinterpret_cast<LPCWSTR>(get_window_class()), converter.from_bytes(title).c_str(), WS_OVERLAPPEDWINDOW, x, y, width, height, nullptr, nullptr, nullptr, nullptr);
+	hWnd = CreateWindowExW(0, reinterpret_cast<LPCWSTR>(get_window_class_atom()), converter.from_bytes(title).c_str(), WS_OVERLAPPEDWINDOW, x, y, width, height, nullptr, nullptr, nullptr, nullptr);
 	assert(hWnd != nullptr);
 
 	SetLastError(ERROR_SUCCESS);
@@ -29,28 +29,18 @@ main_window_t::impl_t::impl_t(std::string title, int x, int y, int width, int he
 	assert(GetWindowRect(hWnd, &rect) != 0);
 	this->x = rect.left;
 	this->y = rect.top;
+
+	handlers.insert({ WM_DESTROY, [&](WPARAM wParam, LPARAM lParam)->LRESULT {
+		PostQuitMessage(0);
+		return 0;
+	} });
 }
 
 HWND main_window_t::impl_t::handle() {
 	return hWnd;
 }
 
-LRESULT main_window_t::impl_t::handle_message(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	switch (uMsg) {
-		case WM_COMMAND:
-			if (LOWORD(wParam) == 123) {
-				MessageBoxA(hWnd, "Message", "Caption", MB_ABORTRETRYIGNORE);
-			}
-			return 0;
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			return 0;
-		default:
-			return DefWindowProcW(hWnd, uMsg, wParam, lParam);
-	}
-}
-
-ATOM main_window_t::impl_t::get_window_class() {
+ATOM main_window_t::impl_t::get_window_class_atom() {
 	struct window_class_t {
 		ATOM atom;
 		window_class_t() {
@@ -60,11 +50,11 @@ ATOM main_window_t::impl_t::get_window_class() {
 			wcx.lpfnWndProc = [](HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) ->LRESULT {
 				main_window_t::impl_t* impl = reinterpret_cast<main_window_t::impl_t*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
 
-				if (impl == nullptr) {
+				if (impl == nullptr || impl->handlers.count(uMsg) == 0) {
 					return DefWindowProcW(hWnd, uMsg, wParam, lParam);
 				}
 
-				return impl->handle_message(uMsg, wParam, lParam);
+				return impl->handlers.at(uMsg)(wParam, lParam);
 			};
 			wcx.hCursor = LoadCursorW(nullptr, IDC_ARROW);
 			assert(wcx.hCursor != nullptr);
