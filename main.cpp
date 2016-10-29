@@ -14,7 +14,7 @@ int main() {
 
 	constexpr auto CLASS_NAME = L"main";
 
-	auto window = std::make_unique<main_window_t>();
+	auto window = std::make_unique<main_window_t>(u8"Window"s, 500, 200);
 	auto button = std::make_unique<button_t>(1, u8"Text"s, 3, 3, 280, 100, *window);
 
 	return message_queue();

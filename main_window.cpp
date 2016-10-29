@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <memory>
+#include <string>
+#include <locale>
 #include <cassert>
 
 #define WIN32_LEAN_AND_MEAN
@@ -10,14 +12,23 @@
 #include <Windows.h>
 #include <CommCtrl.h>
 
-main_window_t::impl_t::impl_t() {
-	hWnd = CreateWindowExW(0, reinterpret_cast<LPCWSTR>(get_window_class()), L"Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 300, 300, nullptr, nullptr, nullptr, nullptr);
+main_window_t::impl_t::impl_t(std::string title, int width, int height) :impl_t(title, CW_USEDEFAULT, CW_USEDEFAULT, width, height) {}
+
+main_window_t::impl_t::impl_t(std::string title, int x, int y, int width, int height) : title(title), width(width), height(height) {
+	std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>, wchar_t> converter;
+
+	hWnd = CreateWindowExW(0, reinterpret_cast<LPCWSTR>(get_window_class()), converter.from_bytes(title).c_str(), WS_OVERLAPPEDWINDOW, x, y, width, height, nullptr, nullptr, nullptr, nullptr);
 	assert(hWnd != nullptr);
 
 	SetLastError(ERROR_SUCCESS);
 	assert(!(SetWindowLongPtrW(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this)) == 0 && GetLastError() != ERROR_SUCCESS));
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+
+	auto rect = RECT{};
+	assert(GetWindowRect(hWnd, &rect) != 0);
+	this->x = rect.left;
+	this->y = rect.top;
 }
 
 HWND main_window_t::impl_t::handle() {
@@ -69,7 +80,9 @@ ATOM main_window_t::impl_t::get_window_class() {
 	return window_class.atom;
 }
 
-main_window_t::main_window_t() :impl(new impl_t) {}
+main_window_t::main_window_t(std::string title, int x, int y, int width, int height) :impl(new impl_t{ title, x, y, width, height }) {}
+
+main_window_t::main_window_t(std::string title, int width, int height) : impl(new impl_t{ title, width, height }) {}
 
 main_window_t::~main_window_t() = default;
 
