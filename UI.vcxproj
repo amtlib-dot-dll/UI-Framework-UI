@@ -160,11 +160,11 @@
     <ClCompile Include="message_queue.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\button.h" />
-    <ClInclude Include="include\impl\button_impl.h" />
-    <ClInclude Include="include\impl\main_window_impl.h" />
-    <ClInclude Include="include\main_window.h" />
-    <ClInclude Include="include\message_queue.h" />
+    <ClInclude Include="button.h" />
+    <ClInclude Include="impl\button_impl.h" />
+    <ClInclude Include="impl\main_window_impl.h" />
+    <ClInclude Include="main_window.h" />
+    <ClInclude Include="message_queue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

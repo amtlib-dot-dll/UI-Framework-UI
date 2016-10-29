@@ -17,22 +17,6 @@ main_window_t::impl_t::impl_t() {
 	SetLastError(ERROR_SUCCESS);
 	assert(!(SetWindowLongPtrW(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this)) == 0 && GetLastError() != ERROR_SUCCESS));
 
-	//HWND hwndCommandLink = CreateWindowExW(0,
-	//	L"BUTTON",
-	//	L"OK",
-	//	WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_COMMANDLINK,
-	//	10,
-	//	10,
-	//	100,
-	//	100,
-	//	hWnd,
-	//	reinterpret_cast<HMENU>(123),
-	//	(HINSTANCE)GetWindowLongPtrW(hWnd, GWLP_HINSTANCE),
-	//	nullptr);
-	//assert(hwndCommandLink != nullptr);
-	//SendMessageW(hwndCommandLink, WM_SETTEXT, 0, (LPARAM)L"Command link");
-	//SendMessageW(hwndCommandLink, BCM_SETNOTE, 0, (LPARAM)L"with note");
-
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 }
 

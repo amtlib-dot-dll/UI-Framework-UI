@@ -5,15 +5,23 @@
 
 #include "main_window.h"
 
+#include <string>
+
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <Windows.h>
 
 class button_t::impl_t {
 	HWND hButton;
+	int x;
+	int y;
+	int width;
+	int height;
+	std::string text;
+	uintptr_t id;
 
 public:
-	impl_t(HWND hWnd);
+	impl_t(uintptr_t id, std::string text, int x, int y, int width, int height, HWND hWnd);
 };
 
 #endif

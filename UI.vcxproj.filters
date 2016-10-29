@@ -29,19 +29,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\button.h">
+    <ClInclude Include="button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\main_window.h">
+    <ClInclude Include="main_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\message_queue.h">
+    <ClInclude Include="message_queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\impl\button_impl.h">
+    <ClInclude Include="impl\button_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\impl\main_window_impl.h">
+    <ClInclude Include="impl\main_window_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
