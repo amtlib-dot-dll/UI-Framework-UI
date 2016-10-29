@@ -38,7 +38,10 @@
     <ClInclude Include="include\message_queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\impl\main_window.h">
+    <ClInclude Include="include\impl\button_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\impl\main_window_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -161,7 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\button.h" />
-    <ClInclude Include="include\impl\main_window.h" />
+    <ClInclude Include="include\impl\button_impl.h" />
+    <ClInclude Include="include\impl\main_window_impl.h" />
     <ClInclude Include="include\main_window.h" />
     <ClInclude Include="include\message_queue.h" />
   </ItemGroup>
