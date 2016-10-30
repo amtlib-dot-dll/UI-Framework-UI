@@ -2,6 +2,7 @@
 
 #include <cassert>
 
+#define NOMINMAX
 #include <Windows.h>
 
 int message_queue() {

@@ -7,7 +7,6 @@
 #include <unordered_map>
 #include <functional>
 
-#define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <Windows.h>
 
