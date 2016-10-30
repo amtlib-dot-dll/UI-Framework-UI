@@ -1,8 +1,8 @@
 #include "button.h"
 #include "impl/button_impl.h"
 
-#include "main_window.h"
-#include "impl/main_window_impl.h"
+#include "window.h"
+#include "impl/window_impl.h"
 
 #include <cassert>
 #include <thread>
@@ -20,6 +20,6 @@ button_t::impl_t::impl_t(uintptr_t id, std::string text, int x, int y, int width
 	assert(hButton != nullptr);
 }
 
-button_t::button_t(uintptr_t id, std::string text, int x, int y, int width, int height, main_window_t& window) :impl(new impl_t{ id, text, x, y, width, height, window.get_impl().handle() }) {}
+button_t::button_t(uintptr_t id, std::string text, int x, int y, int width, int height, window_t& window) :impl(new impl_t{ id, text, x, y, width, height, window.get_impl().handle() }) {}
 
 button_t::~button_t() = default;

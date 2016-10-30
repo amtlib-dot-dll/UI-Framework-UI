@@ -21,10 +21,9 @@ protected:
 	int height;
 
 public:
-	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-	impl_t(std::function<HWND()> init);
-	virtual ~impl_t() = 0;
+	impl_t(std::string title, int width, int height);
+	impl_t(std::string title, int x, int y, int width, int height);
+	~impl_t();
 
 	HWND handle();
 };
