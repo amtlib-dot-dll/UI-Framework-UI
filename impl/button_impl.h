@@ -11,13 +11,13 @@
 #include <Windows.h>
 
 class button_t::impl_t {
-	HWND hButton;
-	int x;
-	int y;
-	int width;
-	int height;
-	std::string text;
-	uintptr_t id;
+	HWND hButton_;
+	int x_;
+	int y_;
+	int width_;
+	int height_;
+	std::string text_;
+	uintptr_t id_;
 
 public:
 	impl_t(uintptr_t id, std::string text, int x, int y, int width, int height, HWND hWnd);
