@@ -44,6 +44,11 @@ window_t::impl_t::impl_t(std::string title, int x, int y, int width, int height)
 		return 0;
 	} });
 
+	handlers_.insert({ WM_USER, [](WPARAM wParam, LPARAM lParam)->LRESULT {
+		MessageBoxA(nullptr, "Message", "Caption", MB_ABORTRETRYIGNORE);
+		return 0;
+	} });
+
 	thread_ = std::thread{ [&] {
 		std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>, wchar_t> converter;
 
