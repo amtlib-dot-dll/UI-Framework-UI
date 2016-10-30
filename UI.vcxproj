@@ -158,6 +158,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_window.cpp" />
     <ClCompile Include="message_queue.cpp" />
+    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="button.h" />
@@ -165,6 +166,8 @@
     <ClInclude Include="impl\main_window_impl.h" />
     <ClInclude Include="main_window.h" />
     <ClInclude Include="message_queue.h" />
+    <ClInclude Include="window.h" />
+    <ClInclude Include="window_impl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
