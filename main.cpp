@@ -3,7 +3,7 @@
 #include <system_error>
 #include <memory>
 
-#include "main_window.h"
+#include "window.h"
 #include "button.h"
 #include "message_queue.h"
 
@@ -14,8 +14,8 @@ int main() {
 
 	constexpr auto CLASS_NAME = L"main";
 
-	auto window = std::make_unique<main_window_t>(u8"Window"s, 500, 200);
-	auto window2 = std::make_unique<main_window_t>(u8"Window2"s, 500, 200);
+	auto window = std::make_unique<window_t>(u8"Window"s, 500, 200);
+	auto window2 = std::make_unique<window_t>(u8"Window2"s, 500, 200);
 	auto button = std::make_unique<button_t>(1, u8"Text"s, 3, 3, 280, 100, *window);
 	auto button2 = std::make_unique<button_t>(1, u8"Text2"s, 10, 3, 280, 100, *window2);
 

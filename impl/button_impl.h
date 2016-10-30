@@ -3,7 +3,7 @@
 
 #include "button.h"
 
-#include "main_window.h"
+#include "window.h"
 
 #include <string>
 
