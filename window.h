@@ -4,19 +4,30 @@
 #include <string>
 #include <memory>
 #include <thread>
+#include <unordered_map>
+
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <Windows.h>
 
 class window_t {
 protected:
-	class impl_t;
-	std::unique_ptr<impl_t> impl_;
+	HWND hWnd_;
+	std::unordered_map<UINT, std::function<LRESULT(WPARAM wParam, LPARAM lParam)>> handlers_;
+	std::string title_;
+	int x_;
+	int y_;
+	int width_;
+	int height_;
+
+	std::thread thread_;
 
 public:
 	window_t(std::string title, int width, int height);
 	window_t(std::string title, int x, int y, int width, int height);
-	~window_t();
 
+	HWND handle();
 	std::thread& thread();
-	impl_t& get_impl();
 };
 
 #endif

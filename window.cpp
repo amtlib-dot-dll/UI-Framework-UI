@@ -1,5 +1,4 @@
 #include "window.h"
-#include "impl/window_impl.h"
 
 #include <string>
 #include <locale>
@@ -7,12 +6,13 @@
 #include <functional>
 #include <mutex>
 
+#define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <Windows.h>
 
-window_t::impl_t::impl_t(std::string title, int width, int height) :impl_t(title, CW_USEDEFAULT, CW_USEDEFAULT, width, height) {}
+window_t::window_t(std::string title, int width, int height) :window_t(title, CW_USEDEFAULT, CW_USEDEFAULT, width, height) {}
 
-window_t::impl_t::impl_t(std::string title, int x, int y, int width, int height) : title_(title), width_(width), height_(height) {
+window_t::window_t(std::string title, int x, int y, int width, int height) : title_(title), width_(width), height_(height) {
 	static std::once_flag flag;
 	static ATOM atom;
 	if (atom == 0) {
@@ -21,13 +21,13 @@ window_t::impl_t::impl_t(std::string title, int x, int y, int width, int height)
 			wcx.cbSize = sizeof(wcx);
 			wcx.lpszClassName = L"window";
 			wcx.lpfnWndProc = [](HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)->LRESULT {
-				window_t::impl_t* impl = reinterpret_cast<window_t::impl_t*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
+				window_t* instance = reinterpret_cast<window_t*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
 
-				if (impl == nullptr || impl->handlers_.count(uMsg) == 0) {
+				if (instance == nullptr || instance->handlers_.count(uMsg) == 0) {
 					return DefWindowProcW(hWnd, uMsg, wParam, lParam);
 				}
 
-				return impl->handlers_.at(uMsg)(wParam, lParam);
+				return instance->handlers_.at(uMsg)(wParam, lParam);
 			};
 			wcx.hCursor = LoadCursorW(nullptr, IDC_ARROW);
 			assert(wcx.hCursor != nullptr);
@@ -80,26 +80,10 @@ window_t::impl_t::impl_t(std::string title, int x, int y, int width, int height)
 	} };
 }
 
-window_t::impl_t::~impl_t() = default;
-
-HWND window_t::impl_t::handle() {
+HWND window_t::handle() {
 	return hWnd_;
 }
 
-std::thread& window_t::impl_t::thread() {
-	return thread_;
-}
-
-window_t::window_t(std::string title, int width, int height) :impl_(new impl_t{ title, width, height }) {}
-
-window_t::window_t(std::string title, int x, int y, int width, int height) : impl_(new impl_t{ title, x, y, width, height }) {}
-
-window_t::~window_t() = default;
-
 std::thread& window_t::thread() {
-	return impl_->thread();
-}
-
-window_t::impl_t& window_t::get_impl() {
-	return *impl_;
+	return thread_;
 }

@@ -156,14 +156,10 @@
   <ItemGroup>
     <ClCompile Include="button.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="message_queue.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="button.h" />
-    <ClInclude Include="impl\button_impl.h" />
-    <ClInclude Include="impl\window_impl.h" />
-    <ClInclude Include="message_queue.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
