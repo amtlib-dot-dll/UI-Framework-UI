@@ -5,6 +5,7 @@
 #include <memory>
 #include <thread>
 #include <unordered_map>
+#include <functional>
 
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
@@ -12,8 +13,8 @@
 
 class window_t {
 protected:
-	HWND hWnd_;
-	std::unordered_map<UINT, std::function<LRESULT(WPARAM wParam, LPARAM lParam)>> handlers_;
+	::HWND hWnd_;
+	std::unordered_map<::UINT, std::function<::LRESULT(::WPARAM wParam, ::LPARAM lParam)>> handlers_;
 	std::string title_;
 	int x_;
 	int y_;
@@ -26,7 +27,7 @@ public:
 	window_t(std::string title, int width, int height);
 	window_t(std::string title, int x, int y, int width, int height);
 
-	HWND handle();
+	::HWND handle();
 	std::thread& thread();
 };
 

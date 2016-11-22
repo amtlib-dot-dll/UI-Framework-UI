@@ -49,7 +49,7 @@ window_t::window_t(std::string title, int x, int y, int width, int height) : tit
 		return 0;
 	} });
 
-	thread_ = std::thread{ [&] {
+	thread_ = std::thread{ [this] {
 		std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>, wchar_t> converter;
 
 		hWnd_ = CreateWindowExW(0, reinterpret_cast<LPCWSTR>(atom), converter.from_bytes(title_).c_str(), WS_OVERLAPPEDWINDOW, x_, y_, width_, height_, nullptr, nullptr, nullptr, nullptr);
